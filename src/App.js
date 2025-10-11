@@ -3,9 +3,18 @@ import './App.css';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    if (isMenuOpen) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsMenuOpen(false);
+        setIsClosing(false);
+      }, 300); // Match animation duration
+    } else {
+      setIsMenuOpen(true);
+    }
   };
 
   // Prevent scrolling when menu is open
@@ -45,7 +54,7 @@ function App() {
       </nav>
       
       {isMenuOpen && (
-        <div className="dropdown-menu">
+        <div className={`dropdown-menu ${isClosing ? 'closing' : ''}`}>
           <div className="menu-content">
             {menuItems.map((item, index) => (
               <a 
