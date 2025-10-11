@@ -1,9 +1,28 @@
+/* CSS Root Variables */
+:root {
+  --font-title: 'Bodoni Old Face BE Small Caps & Regular', 'Bodoni Moda', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --color-primary: #122223;
+  --color-secondary: #F6F2F2;
+  --color-accent: #81B59F;
+  --color-navbar: #F6F2F2;
+}
+
+/* Custom Font Face */
+@font-face {
+  font-family: 'Bodoni Old Face BE Small Caps & Regular';
+  src: url('/fonts/Bodoni Old Face BE Small Caps & Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .App {
   min-height: 100vh;
 }
 
 .navbar {
-  background-color: #F6F2F2;
+  background-color: var(--color-navbar);
   padding: 1rem 0rem;
   position: fixed;
   top: 0;
@@ -41,11 +60,24 @@
   transition: all 0.3s ease;
 }
 
+/* Hamburger to close icon animation */
+.hamburger-menu.open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 .brand-text {
-  font-family: 'Bodoni Moda', serif;
+  font-family: var(--font-title);
   font-size: 1.75rem;
   font-weight: 400;
-  color: #333;
+  color: var(--color-primary);
   margin: 0;
   letter-spacing: 0.1em;
 }
@@ -54,6 +86,57 @@
   margin-top: 80px;
   padding: 2rem;
   text-align: center;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-accent);
+  z-index: 999;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 4rem;
+}
+
+.menu-item {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover {
+  color: var(--color-primary);
+}
+
+.menu-item.active {
+  color: var(--color-primary);
+  font-weight: 500;
 }
 
 /* Responsive design */
@@ -79,5 +162,18 @@
   .main-content {
     margin-top: 70px;
     padding: 1rem;
+  }
+  
+  .dropdown-menu {
+    top: 70px;
+  }
+  
+  .menu-content {
+    padding: 0 1.25rem;
+    gap: 1.5rem;
+  }
+  
+  .menu-item {
+    font-size: 1.25rem;
   }
 }
