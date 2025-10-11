@@ -8,6 +8,20 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Prevent scrolling when menu is open
+  React.useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const menuItems = [
     { name: 'Home', isActive: true },
     { name: 'Portfolio', isActive: false },
