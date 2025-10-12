@@ -1,11 +1,14 @@
 /* CSS Root Variables */
 :root {
+  --font-primary: 'Spectral', serif;
   --font-title: 'Bodoni Old Face BE Small Caps & Regular', 'Bodoni Moda', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-h1: var(--font-primary);
   --color-primary: #122223;
   --color-secondary: #F6F2F2;
   --color-accent: #81B59F;
   --color-navbar: #F6F2F2;
+  --color-light: #F2FEDC;
 }
 
 /* Custom Font Face */
@@ -21,6 +24,21 @@
   min-height: 100vh;
 }
 
+/* Page Transition Animation */
+.page-content {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 .navbar {
   background-color: var(--color-navbar);
   padding: 1rem 0rem;
@@ -29,7 +47,6 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar-content {
@@ -83,24 +100,41 @@
 }
 
 .main-content {
-  margin-top: 80px;
-  padding: 2rem;
+  margin-top: 0;
+  padding: 0;
   text-align: center;
+  width: 100%;
 }
 
-/* Dropdown Menu */
-.dropdown-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--color-accent);
-  z-index: 999;
-  animation: slideDown 0.3s ease-out;
-  overflow: hidden;
+/* Pricing Page */
+.pricing-page {
+  background-color: var(--color-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 0 0 0;
+  width: 100%;
+  margin: 0;
 }
 
+.pricing-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 3rem 4rem;
+}
+
+.transparency-text {
+  font-family: var(--font-h1);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 300;
+  color: var(--color-light);
+  text-align: center;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Dropdown Menu Slide Animations */
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -119,9 +153,27 @@
   }
 }
 
-.dropdown-menu.closing {
-  animation: slideUp 0.3s ease-in;
+/* Dropdown Menu */
+.dropdown-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-accent);
+  z-index: 999; /* Behind navbar */
+  transform: translateY(-100%);
+  overflow: hidden;
 }
+
+.dropdown-menu.show {
+  animation: slideDown 0.4s ease-in-out forwards;
+}
+
+.dropdown-menu.closing {
+  animation: slideUp 0.4s ease-in-out forwards;
+}
+
 
 .menu-content {
   height: 100%;
@@ -130,7 +182,7 @@
   justify-content: center;
   align-items: center;
   gap: 3rem;
-  padding: 80px 4rem 0 4rem;
+  padding: 80px 4rem 0 4rem; /* Top padding to account for navbar */
 }
 
 .menu-item {
@@ -140,6 +192,10 @@
   color: var(--color-secondary);
   text-decoration: none;
   transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
 
 .menu-item:hover {
@@ -176,16 +232,18 @@
     padding: 1rem;
   }
   
-  .dropdown-menu {
-    top: 70px;
-  }
+  
   
   .menu-content {
-    padding: 70px 1.25rem 0 1.25rem;
+    padding: 70px 1.25rem 0 1.25rem; /* Mobile navbar height */
     gap: 2.5rem;
   }
   
   .menu-item {
     font-size: 1.25rem;
+  }
+  
+  .pricing-content {
+    padding: 2rem 1.25rem;
   }
 }
