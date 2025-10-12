@@ -192,40 +192,10 @@
 }
 
 .required-star {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   margin-right: 0.5rem;
-  position: relative;
-}
-
-.required-star::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
-  background: var(--color-alert);
-  clip-path: polygon(
-    50% 0%, 
-    58% 25%, 
-    85% 15%, 
-    75% 40%, 
-    100% 50%, 
-    75% 60%, 
-    85% 85%, 
-    58% 75%, 
-    50% 100%, 
-    42% 75%, 
-    15% 85%, 
-    25% 60%, 
-    0% 50%, 
-    25% 40%, 
-    15% 15%, 
-    42% 25%
-  );
+  display: inline-block;
 }
 
 
@@ -327,6 +297,9 @@
   outline: none;
   box-sizing: border-box;
   text-align: left;
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-options {

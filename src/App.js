@@ -145,13 +145,13 @@ function App() {
               
               <div className="form-section">
                       <p className="form-question">
-                        <span className="required-star"></span>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/rancho-mobile-vet.appspot.com/o/star%20(1).png?alt=media&token=0e377fd5-099a-44e3-831c-30e07ce75d4e" alt="Required" className="required-star" />
                         How many pages will your website have?
                       </p>
                 <div className="custom-dropdown-container">
                   <div className="custom-dropdown">
                     <div className="dropdown-selected" onClick={handleDropdownToggle}>
-                      {selectedPages || ''}
+                      {selectedPages || <span style={{opacity: 0}}>1</span>}
                     </div>
                     {isDropdownOpen && (
                       <div className="dropdown-options">
