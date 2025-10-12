@@ -15,6 +15,8 @@ function App() {
     const hash = window.location.hash.slice(1);
     return hash || 'Home';
   });
+  const [selectedPages, setSelectedPages] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     if (isMenuOpen) {
@@ -83,11 +85,27 @@ function App() {
     }, 400);
   };
 
+  const handleBrandClick = () => {
+    // Navigate to Home page
+    setCurrentPage('Home');
+    setNextPage('Home');
+    window.location.hash = 'Home';
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleOptionSelect = (value) => {
+    setSelectedPages(value);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <div className="App">
       <nav className="navbar">
         <div className="navbar-content">
-          <h1 className="brand-text">WELLDONE</h1>
+          <h1 className="brand-text" onClick={handleBrandClick}>WELLDONE</h1>
           <button className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
             <div className="hamburger-line"></div>
             <div className="hamburger-line"></div>
@@ -122,6 +140,38 @@ function App() {
           <div className={`pricing-page page-content ${showPage ? 'fade-in' : 'fade-out'}`}>
             <div className="pricing-content">
               <h1 className="transparency-text">We believe in transparency.</h1>
+              <h3 className="price-estimate-text">Want a price estimate?</h3>
+              <p className="disclaimer-text">Get one below. Please note this is only a ballpark cost and does not reflect the final cost.</p>
+              
+              <div className="form-section">
+                      <p className="form-question">
+                        <span className="required-star"></span>
+                        How many pages will your website have?
+                      </p>
+                <div className="custom-dropdown-container">
+                  <div className="custom-dropdown">
+                    <div className="dropdown-selected" onClick={handleDropdownToggle}>
+                      {selectedPages || ''}
+                    </div>
+                    {isDropdownOpen && (
+                      <div className="dropdown-options">
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('')}></div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('1')}>1</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('2')}>2</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('3')}>3</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('4')}>4</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('5')}>5</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('6')}>6</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('7')}>7</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('8')}>8</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('9')}>9</div>
+                        <div className="dropdown-option" onClick={() => handleOptionSelect('10+')}>10+</div>
+                      </div>
+                    )}
+                    <div className="dropdown-icon" onClick={handleDropdownToggle}>▼</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

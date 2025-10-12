@@ -4,11 +4,13 @@
   --font-title: 'Bodoni Old Face BE Small Caps & Regular', 'Bodoni Moda', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-h1: var(--font-primary);
+  --font-p1: 'Avenir Heavy', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --color-primary: #122223;
   --color-secondary: #F6F2F2;
   --color-accent: #81B59F;
   --color-navbar: #F6F2F2;
   --color-light: #F2FEDC;
+  --color-alert: #E03D5A;
 }
 
 /* Custom Font Face */
@@ -32,6 +34,7 @@
 /* Page Transition Animation */
 .page-content {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  padding-top: 120px; /* Consistent top spacing for all pages */
 }
 
 .fade-in {
@@ -106,6 +109,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  cursor: pointer;
 }
 
 .main-content {
@@ -118,13 +122,13 @@
 /* Pricing Page */
 .pricing-page {
   background-color: var(--color-primary);
-  min-height: 100vh;
+  min-height: 120vh;
   width: 100vw;
   min-width: 100vw;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 80px 0 0 0;
+  padding: 120px 0 80px 0; /* Added bottom padding for more space */
   margin: 0;
   position: relative;
   left: 50%;
@@ -135,28 +139,249 @@
 
 .pricing-content {
   width: 100%;
-  max-width: 1200px;
+  max-width: 800px;
   padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
 }
 
 .transparency-text {
   font-family: var(--font-h1);
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(3.5rem, 10vw, 6rem);
   font-weight: 300;
   color: var(--color-light);
-  text-align: center;
+  text-align: left;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
-/* Custom text selection for Pricing page light text */
+.price-estimate-text {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 300;
+  color: var(--color-secondary);
+  text-align: left;
+  margin: 3.5rem 0 0 0;
+  line-height: 1.3;
+}
+
+.disclaimer-text {
+  font-family: var(--font-p1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 400;
+  color: var(--color-secondary);
+  text-align: left;
+  margin: 3.5rem 0 0 0;
+  line-height: 1.4;
+}
+
+.form-section {
+  margin: 3.5rem 0 0 0;
+}
+
+.form-question {
+  font-family: var(--font-p1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 400;
+  color: var(--color-secondary);
+  text-align: left;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.required-star {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+.required-star::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: var(--color-alert);
+  clip-path: polygon(
+    50% 0%, 
+    58% 25%, 
+    85% 15%, 
+    75% 40%, 
+    100% 50%, 
+    75% 60%, 
+    85% 85%, 
+    58% 75%, 
+    50% 100%, 
+    42% 75%, 
+    15% 85%, 
+    25% 60%, 
+    0% 50%, 
+    25% 40%, 
+    15% 15%, 
+    42% 25%
+  );
+}
+
+
+.dropdown-container {
+  position: relative;
+  width: calc(100% + 15rem);
+  
+}
+
+.form-dropdown {
+  width: 100%;
+  padding: 0.75rem 0 0.75rem 0;
+  font-family: var(--font-p1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--color-secondary) !important;
+  background-color: #122223 !important;
+  background: #122223 !important;
+  border: none;
+  border-bottom: 2px solid var(--color-secondary);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  box-sizing: border-box;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  color: var(--color-secondary);
+  font-size: 12px;
+}
+
+.form-dropdown:focus {
+  border-bottom-color: var(--color-secondary);
+}
+
+.form-dropdown option {
+  background-color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+}
+
+.form-dropdown optgroup {
+  background-color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+}
+
+/* Force dropdown background on all states */
+.form-dropdown:focus,
+.form-dropdown:active,
+.form-dropdown:hover {
+  background-color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+}
+
+/* Webkit specific overrides */
+.form-dropdown::-webkit-list-button {
+  background-color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+}
+
+.form-dropdown::-webkit-calendar-picker-indicator {
+  background-color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+}
+
+/* Custom Dropdown Styles */
+.custom-dropdown-container {
+  position: relative;
+  width: calc(100% + 15rem);
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-selected {
+  width: 100%;
+  padding: 0.75rem 0;
+  font-family: var(--font-p1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  border: none;
+  border-bottom: 2px solid var(--color-secondary);
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-secondary);
+  border-top: none;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-option {
+  padding: 0.75rem 1rem;
+  font-family: var(--font-p1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.dropdown-option:hover {
+  background-color: var(--color-accent);
+}
+
+.dropdown-option:first-child {
+  border-top: 1px solid var(--color-secondary);
+}
+
+/* Custom text selection for pages with primary background */
 .pricing-page ::selection {
-  background-color: var(--color-light);
+  background-color: var(--color-secondary);
   color: var(--color-primary);
 }
 
 .pricing-page ::-moz-selection {
-  background-color: var(--color-light);
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+/* Apply same selection styling to any page with primary background */
+[style*="background-color: var(--color-primary)"] ::selection,
+[style*="background-color: #122223"] ::selection {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+[style*="background-color: var(--color-primary)"] ::-moz-selection,
+[style*="background-color: #122223"] ::-moz-selection {
+  background-color: var(--color-secondary);
   color: var(--color-primary);
 }
 
@@ -258,6 +483,10 @@
     padding: 1rem;
   }
   
+  .page-content {
+    padding-top: 110px; /* Slightly less on mobile for better proportions */
+  }
+  
   
   
   .menu-content {
@@ -267,6 +496,10 @@
   
   .menu-item {
     font-size: 1.25rem;
+  }
+  
+  .pricing-page {
+    padding: 110px 0 0 0; /* Mobile spacing */
   }
   
   .pricing-content {
