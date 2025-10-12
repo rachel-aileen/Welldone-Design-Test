@@ -22,6 +22,11 @@
 
 .App {
   min-height: 100vh;
+  width: 100%;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-primary);
 }
 
 /* Page Transition Animation */
@@ -97,6 +102,10 @@
   color: var(--color-primary);
   margin: 0;
   letter-spacing: 0.1em;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .main-content {
@@ -110,12 +119,18 @@
 .pricing-page {
   background-color: var(--color-primary);
   min-height: 100vh;
+  width: 100vw;
+  min-width: 100vw;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 80px 0 0 0;
-  width: 100%;
   margin: 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .pricing-content {
@@ -132,6 +147,17 @@
   text-align: center;
   margin: 0;
   line-height: 1.2;
+}
+
+/* Custom text selection for Pricing page light text */
+.pricing-page ::selection {
+  background-color: var(--color-light);
+  color: var(--color-primary);
+}
+
+.pricing-page ::-moz-selection {
+  background-color: var(--color-light);
+  color: var(--color-primary);
 }
 
 /* Dropdown Menu Slide Animations */

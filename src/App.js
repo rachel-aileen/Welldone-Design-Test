@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [currentPage, setCurrentPage] = useState('Home');
+  const [currentPage, setCurrentPage] = useState(() => {
+    // Get page from URL hash, default to 'Home'
+    const hash = window.location.hash.slice(1);
+    return hash || 'Home';
+  });
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
   const [showPage, setShowPage] = useState(true);
-  const [nextPage, setNextPage] = useState('Home');
+  const [nextPage, setNextPage] = useState(() => {
+    const hash = window.location.hash.slice(1);
+    return hash || 'Home';
+  });
 
   const toggleMenu = () => {
     if (isMenuOpen) {
@@ -35,11 +42,25 @@ function App() {
     };
   }, [isMenuOpen]);
 
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      const pageName = hash || 'Home';
+      if (pageName !== currentPage) {
+        setCurrentPage(pageName);
+        setNextPage(pageName);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [currentPage]);
+
   const menuItems = [
     { name: 'Home', isActive: nextPage === 'Home' },
-    { name: 'Portfolio', isActive: nextPage === 'Portfolio' },
-    { name: 'Services', isActive: nextPage === 'Services' },
-    { name: 'About', isActive: nextPage === 'About' },
+    { name: 'Work', isActive: nextPage === 'Work' },
+    { name: 'Process', isActive: nextPage === 'Process' },
     { name: 'Pricing', isActive: nextPage === 'Pricing' },
     { name: 'Contact', isActive: nextPage === 'Contact' }
   ];
@@ -49,6 +70,9 @@ function App() {
       // Update page immediately
       setCurrentPage(pageName);
       setNextPage(pageName);
+      
+      // Update URL hash to maintain state on refresh
+      window.location.hash = pageName;
     }
     
     // Close menu immediately with animation
