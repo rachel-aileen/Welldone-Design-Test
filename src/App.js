@@ -17,6 +17,18 @@ function App() {
   });
   const [selectedPages, setSelectedPages] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedFeatures, setSelectedFeatures] = useState({
+    'Blog/Newsletter': false,
+    'Payments': false,
+    'Scheduling': false
+  });
+  const [selectedServices, setSelectedServices] = useState({
+    'Branding': false,
+    'Copywriting': false,
+    'Logo Design': false
+  });
+  const [navbarVisible, setNavbarVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMenu = () => {
     if (isMenuOpen) {
@@ -58,6 +70,29 @@ function App() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [currentPage]);
+
+  // Handle scroll-based navbar visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setNavbarVisible(false);
+      } else {
+        // Scrolling up
+        setNavbarVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
   const menuItems = [
     { name: 'Home', isActive: nextPage === 'Home' },
@@ -101,9 +136,23 @@ function App() {
     setIsDropdownOpen(false);
   };
 
+  const handleFeatureToggle = (feature) => {
+    setSelectedFeatures(prev => ({
+      ...prev,
+      [feature]: !prev[feature]
+    }));
+  };
+
+  const handleServiceToggle = (service) => {
+    setSelectedServices(prev => ({
+      ...prev,
+      [service]: !prev[service]
+    }));
+  };
+
   return (
     <div className="App">
-      <nav className="navbar">
+      <nav className={`navbar ${navbarVisible ? 'visible' : 'hidden'}`}>
         <div className="navbar-content">
           <h1 className="brand-text" onClick={handleBrandClick}>WELLDONE</h1>
           <button className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
@@ -169,6 +218,48 @@ function App() {
                       </div>
                     )}
                     <div className="dropdown-icon" onClick={handleDropdownToggle}>▼</div>
+                  </div>
+                </div>
+
+                <div className="features-section">
+                  <p className="features-question">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/rancho-mobile-vet.appspot.com/o/star%20(1).png?alt=media&token=0e377fd5-099a-44e3-831c-30e07ce75d4e" alt="Required" className="required-star" />
+                    Select all features you'd like:
+                  </p>
+                  <div className="checkbox-group">
+                    {Object.keys(selectedFeatures).map((feature) => (
+                      <label key={feature} className="checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={selectedFeatures[feature]}
+                          onChange={() => handleFeatureToggle(feature)}
+                          className="checkbox-input"
+                        />
+                        <span className="checkbox-custom"></span>
+                        <span className="checkbox-text">{feature}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="services-section">
+                  <p className="services-question">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/rancho-mobile-vet.appspot.com/o/star%20(1).png?alt=media&token=0e377fd5-099a-44e3-831c-30e07ce75d4e" alt="Required" className="required-star" />
+                    Select any additional services you'd like:
+                  </p>
+                  <div className="checkbox-group">
+                    {Object.keys(selectedServices).map((service) => (
+                      <label key={service} className="checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={selectedServices[service]}
+                          onChange={() => handleServiceToggle(service)}
+                          className="checkbox-input"
+                        />
+                        <span className="checkbox-custom"></span>
+                        <span className="checkbox-text">{service}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
               </div>
