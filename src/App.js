@@ -71,6 +71,24 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [currentPage]);
 
+  // Clear form when leaving Pricing page
+  useEffect(() => {
+    if (currentPage !== 'Pricing') {
+      setSelectedPages('');
+      setSelectedFeatures({
+        'Blog/Newsletter': false,
+        'Payments': false,
+        'Scheduling': false
+      });
+      setSelectedServices({
+        'Branding': false,
+        'Copywriting': false,
+        'Logo Design': false
+      });
+      setIsDropdownOpen(false);
+    }
+  }, [currentPage]);
+
   // Handle scroll-based navbar visibility
   useEffect(() => {
     const handleScroll = () => {
