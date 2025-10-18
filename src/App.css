@@ -6,12 +6,12 @@
   --font-h1: var(--font-primary);
   --font-p1: 'Avenir Heavy', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-p1-medium: 'Avenir Medium', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --color-primary: #122223;
+  --color-primary: #334f9d;
   --color-secondary: #F6F2F2;
   --color-accent: #81B59F;
   --color-navbar: #F6F2F2;
   --color-light: #F2FEDC;
-  --color-alert: #E03D5A;
+  --color-alert: #FFB9E5;
 }
 
 /* Custom Font Face */
@@ -67,6 +67,18 @@
 .navbar.hidden {
   opacity: 0;
   transform: translateY(-100%);
+}
+
+.navbar.pricing-page-nav {
+  background-color: var(--color-primary);
+}
+
+.navbar.pricing-page-nav .brand-text {
+  color: var(--color-secondary);
+}
+
+.navbar.pricing-page-nav .hamburger-line {
+  background-color: var(--color-secondary) !important;
 }
 
 .navbar-content {
@@ -163,7 +175,7 @@
   font-family: var(--font-h1);
   font-size: clamp(3.5rem, 10vw, 6rem);
   font-weight: 300;
-  color: var(--color-light);
+  color: var(--color-secondary);
   text-align: left;
   margin: 0;
   line-height: 1.1;
@@ -197,7 +209,7 @@
   font-family: var(--font-p1);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 400;
-  color: var(--color-light);
+  color: var(--color-secondary);
   text-align: left;
   margin: 0 0 1rem 0;
   line-height: 1.4;
@@ -208,6 +220,7 @@
   height: 20px;
   margin-right: 0.5rem;
   display: inline-block;
+  filter: brightness(0) saturate(100%) invert(75%) sepia(67%) saturate(1258%) hue-rotate(296deg) brightness(102%) contrast(99%);
 }
 
 
@@ -258,7 +271,7 @@
 .features-question {
   font-family: var(--font-p1);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: var(--color-light);
+  color: var(--color-secondary);
   text-align: left;
   margin: 0 0 1rem 0;
   line-height: 1.4;
@@ -322,7 +335,7 @@
 .services-question {
   font-family: var(--font-p1);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: var(--color-light);
+  color: var(--color-secondary);
   text-align: left;
   margin: 0 0 1rem 0;
   line-height: 1.4;
@@ -417,7 +430,7 @@
 }
 
 .dropdown-option:hover {
-  background-color: var(--color-accent);
+  background-color: var(--color-alert);
 }
 
 .dropdown-option:first-child {

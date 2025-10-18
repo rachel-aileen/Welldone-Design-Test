@@ -170,7 +170,7 @@ function App() {
 
   return (
     <div className="App">
-      <nav className={`navbar ${navbarVisible ? 'visible' : 'hidden'}`}>
+      <nav className={`navbar ${navbarVisible ? 'visible' : 'hidden'} ${currentPage === 'Pricing' ? 'pricing-page-nav' : ''}`}>
         <div className="navbar-content">
           <h1 className="brand-text" onClick={handleBrandClick}>WELLDONE</h1>
           <button className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
