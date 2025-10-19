@@ -49,14 +49,21 @@
 }
 
 .navbar {
-  background-color: var(--color-navbar);
+  background-color: transparent;
   padding: 1rem 0rem;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar.scrolled {
+  background-color: rgba(246, 242, 242, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navbar.visible {
@@ -70,7 +77,14 @@
 }
 
 .navbar.pricing-page-nav {
-  background-color: var(--color-primary);
+  background-color: transparent;
+}
+
+.navbar.pricing-page-nav.scrolled {
+  background-color: rgba(18, 34, 35, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
 
 .navbar.pricing-page-nav .brand-text {
@@ -79,6 +93,40 @@
 
 .navbar.pricing-page-nav .hamburger-line {
   background-color: var(--color-secondary) !important;
+}
+
+.navbar.contact-page-nav {
+  background-color: transparent;
+}
+
+.navbar.contact-page-nav.scrolled {
+  background-color: rgba(246, 242, 242, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.contact-page-nav .brand-text {
+  color: var(--color-primary);
+}
+
+.navbar.contact-page-nav .hamburger-line {
+  background-color: var(--color-primary) !important;
+}
+
+.navbar.home-page-nav .brand-text {
+  color: #364954;
+}
+
+.navbar.home-page-nav .hamburger-line {
+  background-color: #364954 !important;
+}
+
+.navbar.home-page-nav.scrolled {
+  background-color: rgba(227, 242, 251, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 2px 20px rgba(54, 73, 84, 0.1);
 }
 
 .navbar-content {
@@ -580,5 +628,215 @@
   
   .pricing-content {
     padding: 2rem 1.25rem;
+  }
+}
+
+/* Contact Page Styles */
+.contact-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-secondary);
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+}
+
+.contact-page.contact-closing {
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+}
+
+.contact-close {
+  position: absolute;
+  top: 2rem;
+  right: 4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  z-index: 1003;
+}
+
+.close-line {
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.close-line:nth-child(1) {
+  transform: rotate(45deg) translate(2px, 2px);
+}
+
+.close-line:nth-child(2) {
+  transform: rotate(-45deg) translate(2px, -2px);
+}
+
+.contact-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 4rem 0;
+}
+
+.contact-content h1 {
+  font-family: var(--font-primary);
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-weight: 300;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-close {
+    top: 1.5rem;
+    right: 1.25rem;
+  }
+  
+  .contact-content {
+    padding: 100px 1.25rem 0;
+  }
+}
+
+/* Home Page Landscape Design */
+.home-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.landscape-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #E3F2FB 0%, #F8C0BE 100%);
+  overflow: hidden;
+}
+
+.sun {
+  position: absolute;
+  top: 48%;
+  right: 15%;
+  width: 400px;
+  height: 400px;
+  background: #F9C7C8;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 100px rgba(249, 199, 200, 0.3);
+}
+
+.land {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: #364954;
+  clip-path: polygon(
+    0% 90%,
+    4% 88%,
+    8% 85%,
+    12% 82%,
+    16% 84%,
+    20% 81%,
+    24% 83%,
+    28% 80%,
+    32% 82%,
+    36% 79%,
+    40% 81%,
+    44% 78%,
+    48% 80%,
+    52% 77%,
+    56% 79%,
+    60% 76%,
+    64% 78%,
+    68% 75%,
+    72% 77%,
+    76% 74%,
+    80% 76%,
+    84% 73%,
+    88% 75%,
+    92% 72%,
+    96% 74%,
+    100% 71%,
+    100% 100%,
+    0% 100%
+  );
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .sun {
+    width: 300px;
+    height: 300px;
+    top: 52%;
+    right: 10%;
+  }
+  
+  .land {
+    height: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sun {
+    width: 250px;
+    height: 250px;
+    top: 58%;
+    right: 5%;
+  }
+  
+  .land {
+    height: 55%;
+  }
+}
+
+/* Audio Toggle Button */
+.audio-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(54, 73, 84, 0.9);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  font-family: var(--font-p1);
+  font-size: 0.9rem;
+  cursor: pointer;
+  z-index: 1004;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.audio-toggle:hover {
+  background: rgba(54, 73, 84, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .audio-toggle {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.8rem;
   }
 }

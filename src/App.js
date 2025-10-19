@@ -29,6 +29,12 @@ function App() {
   });
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isContactClosing, setIsContactClosing] = useState(false);
+  const [audioRef, setAudioRef] = useState(null);
+  const [audioLoaded, setAudioLoaded] = useState(false);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [showAudioButton, setShowAudioButton] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => {
     if (isMenuOpen) {
@@ -89,7 +95,7 @@ function App() {
     }
   }, [currentPage]);
 
-  // Handle scroll-based navbar visibility
+  // Handle scroll-based navbar visibility and transparency
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -102,6 +108,9 @@ function App() {
         setNavbarVisible(true);
       }
       
+      // Set glossy effect when scrolled
+      setIsScrolled(currentScrollY > 50);
+      
       setLastScrollY(currentScrollY);
     };
 
@@ -111,6 +120,52 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollY]);
+
+  // Handle nature music for Home page
+  React.useEffect(() => {
+    if (audioRef) {
+      audioRef.volume = 0.3; // Lower volume for subtle nighttime ambience
+      
+      const handleCanPlay = () => {
+        setAudioLoaded(true);
+        console.log('Audio loaded successfully', audioRef.src);
+      };
+      
+      const handleError = (e) => {
+        console.log('Audio error:', e, audioRef.error);
+        setAudioLoaded(false);
+      };
+      
+      const handleLoadStart = () => {
+        console.log('Audio load started');
+      };
+      
+      audioRef.addEventListener('canplay', handleCanPlay);
+      audioRef.addEventListener('error', handleError);
+      audioRef.addEventListener('loadstart', handleLoadStart);
+      
+      if (currentPage === 'Home' && audioLoaded) {
+        audioRef.play().then(() => {
+          setAudioPlaying(true);
+          setShowAudioButton(false);
+        }).catch(e => {
+          console.log('Autoplay prevented:', e);
+          setShowAudioButton(true);
+        });
+      } else if (currentPage !== 'Home') {
+        audioRef.pause();
+        audioRef.currentTime = 0;
+        setAudioPlaying(false);
+        setShowAudioButton(false);
+      }
+      
+      return () => {
+        audioRef.removeEventListener('canplay', handleCanPlay);
+        audioRef.removeEventListener('error', handleError);
+        audioRef.removeEventListener('loadstart', handleLoadStart);
+      };
+    }
+  }, [currentPage, audioRef, audioLoaded]);
 
   const menuItems = [
     { name: 'Home', isActive: nextPage === 'Home' },
@@ -168,9 +223,19 @@ function App() {
     }));
   };
 
+  const handleContactClose = () => {
+    setIsContactClosing(true);
+    setTimeout(() => {
+      setCurrentPage('Home');
+      setNextPage('Home');
+      window.location.hash = 'Home';
+      setIsContactClosing(false);
+    }, 400);
+  };
+
   return (
     <div className="App">
-      <nav className={`navbar ${navbarVisible ? 'visible' : 'hidden'} ${currentPage === 'Pricing' ? 'pricing-page-nav' : ''}`}>
+      <nav className={`navbar ${navbarVisible ? 'visible' : 'hidden'} ${isScrolled ? 'scrolled' : ''} ${currentPage === 'Pricing' ? 'pricing-page-nav' : ''} ${currentPage === 'Contact' ? 'contact-page-nav' : ''} ${currentPage === 'Home' ? 'home-page-nav' : ''}`}>
         <div className="navbar-content">
           <h1 className="brand-text" onClick={handleBrandClick}>WELLDONE</h1>
           <button className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
@@ -198,9 +263,38 @@ function App() {
       )}
       
       <main className="main-content">
+        <audio 
+          ref={setAudioRef}
+          loop
+          preload="auto"
+        >
+          <source src="https://soundbible.com/mp3/Crickets-SoundBible.com-1479357891.mp3" type="audio/mpeg" />
+          <source src="https://www.soundjay.com/nature/sounds/crickets.wav" type="audio/wav" />
+          <source src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/zapsplat_nature_crickets_chirping_nighttime_01_53882.mp3" type="audio/mpeg" />
+        </audio>
+        
+        {currentPage === 'Home' && showAudioButton && (
+          <button 
+            className="audio-toggle"
+            onClick={() => {
+              if (audioRef) {
+                audioRef.play().then(() => {
+                  setAudioPlaying(true);
+                  setShowAudioButton(false);
+                }).catch(e => console.log('Error playing audio:', e));
+              }
+            }}
+          >
+            🦗 Play Cricket Sounds
+          </button>
+        )}
+        
         {currentPage === 'Home' && (
-          <div className={`page-content ${showPage ? 'fade-in' : 'fade-out'}`}>
-            <h1>Hello World</h1>
+          <div className="home-page">
+            <div className="landscape-background">
+              <div className="sun"></div>
+              <div className="land"></div>
+            </div>
           </div>
         )}
         {currentPage === 'Pricing' && (
@@ -281,6 +375,18 @@ function App() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+        
+        {currentPage === 'Contact' && (
+          <div className={`contact-page ${isContactClosing ? 'contact-closing' : ''}`}>
+            <button className="contact-close" onClick={handleContactClose}>
+              <div className="close-line"></div>
+              <div className="close-line"></div>
+            </button>
+            <div className="contact-content">
+              <h1>Contact</h1>
             </div>
           </div>
         )}
